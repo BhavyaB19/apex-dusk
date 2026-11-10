@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apex Dusk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+
+    <div id="hud" class="hidden">
+      <div class="panel tl">
+        <div class="label">Position</div>
+        <div class="pos"><span id="pos">6</span><sup id="posSuf">th</sup><small>/ 6</small></div>
+      </div>
+
+      <div class="panel tr">
+        <div class="row"><span class="label">Lap</span><b><span id="lap">1</span><small> / 3</small></b></div>
+        <div class="row"><span class="label">Time</span><b id="time">0:00.000</b></div>
+        <div class="row dim"><span class="label">Last</span><b id="last">–:––.–––</b></div>
+        <div class="row dim"><span class="label">Best</span><b id="best">–:––.–––</b></div>
+      </div>
+
+      <div class="bl"><canvas id="map" width="220" height="220"></canvas></div>
+
+      <div class="br">
+        <svg class="gauge" viewBox="0 0 200 200">
+          <path class="g-bg" d="M 36 158 A 82 82 0 1 1 164 158" />
+          <path id="gArc" class="g-fg" d="M 36 158 A 82 82 0 1 1 164 158" />
+        </svg>
+        <div class="speed"><b id="spd">0</b><span>km/h</span></div>
+        <div class="boost"><i id="boostFill"></i></div>
+        <div class="boostLabel">Boost <kbd>Shift</kbd></div>
+      </div>
+
+      <div id="msg"></div>
+      <div id="wrong" class="hidden">Wrong way</div>
+    </div>
+
+    <div id="menu">
+      <div class="menuInner">
+        <div class="kicker">Twilight circuit · 3 laps · 6 cars</div>
+        <h1>Apex<span>Dusk</span></h1>
+        <button id="start">Start race</button>
+        <div class="keys">
+          <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrows<span>Drive</span></div>
+          <div><kbd>Space</kbd><span>Drift (fills boost)</span></div>
+          <div><kbd>Shift</kbd><span>Boost</span></div>
+          <div><kbd>R</kbd> reset · <kbd>C</kbd> camera · <kbd>P</kbd> pause · <kbd>M</kbd> mute</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="results" class="hidden">
+      <div class="menuInner">
+        <div class="kicker" id="resKicker">Race complete</div>
+        <h2 id="resTitle">1st place</h2>
+        <ol id="resList"></ol>
+        <button id="again">Race again</button>
+      </div>
+    </div>
+
+    <div id="pause" class="hidden"><div>Paused</div><small>Press P to resume</small></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
