@@ -1,29 +1,10 @@
 import * as THREE from 'three';
-import { clamp, wrapAngle } from './noise';
+import { clamp, wrapAngle } from '../core/math';
+import { disposeTree } from '../core/dispose';
+import type { TrackDef } from './tracks';
 
 export const ROAD_HALF = 8;
 export const WALL_OFFSET = ROAD_HALF + 0.35;
-export const LAPS = 3;
-
-/** Circuit control points as [x, y, z]. A closed, non-crossing loop of about 1.9 km. */
-const CONTROL: Array<[number, number, number]> = [
-  [0, 0, 0],
-  [160, 0, 0],
-  [300, 3, 20],
-  [380, 9, 110],
-  [340, 17, 220],
-  [220, 22, 250],
-  [130, 17, 190],
-  [40, 11, 240],
-  [-40, 6, 340],
-  [-170, 2, 360],
-  [-280, 0, 290],
-  [-300, 5, 170],
-  [-220, 11, 100],
-  [-270, 8, 10],
-  [-210, 3, -30],
-  [-110, 0, -4],
-];
 
 export interface Frame {
   pos: THREE.Vector3;
@@ -72,8 +53,11 @@ export class Track {
   readonly center = new THREE.Vector2();
   private padUniforms = { uTime: { value: 0 } };
 
-  constructor(maxAnisotropy: number) {
-    const pts = CONTROL.map(([x, y, z]) => new THREE.Vector3(x, y, z));
+  constructor(
+    readonly def: TrackDef,
+    maxAnisotropy: number,
+  ) {
+    const pts = def.control.map(([x, y, z]) => new THREE.Vector3(x, y, z));
     const curve = new THREE.CatmullRomCurve3(pts, true, 'centripetal');
     curve.arcLengthDivisions = 6000;
     this.length = curve.getLength();
@@ -218,6 +202,10 @@ export class Track {
     this.padUniforms.uTime.value = time;
   }
 
+  dispose(): void {
+    disposeTree(this.group);
+  }
+
   private buildRoad(maxAnisotropy: number): void {
     const n = this.n;
     const cnt = n + 1;
@@ -328,10 +316,10 @@ export class Track {
       wall.receiveShadow = true;
       this.group.add(wall);
 
-      // Light strip along the inner face. Cyan on the left, pink on the right, hotter in corners.
+      // Light strip along the inner face, in the theme's colours and hotter in corners.
       const gp = new Float32Array(cnt * 2 * 3);
       const gc = new Float32Array(cnt * 2 * 3);
-      const base = sg < 0 ? [0.1, 1.05, 2.3] : [2.5, 0.22, 1.0];
+      const base = sg < 0 ? this.def.theme.wallLeft : this.def.theme.wallRight;
       for (let i = 0; i < cnt; i++) {
         const k = (i % n) * 3;
         const lat = sg * (WALL_OFFSET - 0.04);
@@ -444,13 +432,7 @@ export class Track {
           gl_FragColor = vec4(col * a, a);
         }`,
     });
-    const spots: Array<[number, number]> = [
-      [0.055, 0],
-      [0.335, 3.2],
-      [0.6, -3.2],
-      [0.845, 0],
-    ];
-    for (const [frac, lat] of spots) {
+    for (const [frac, lat] of this.def.pads) {
       const s = Math.round(frac * this.n);
       this.pads.push({ s, lat });
       this.group.add(new THREE.Mesh(this.ribbon(s - 4, s + 4, lat - 2.6, lat + 2.6, 0.05), mat));

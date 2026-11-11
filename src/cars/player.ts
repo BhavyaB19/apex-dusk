@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import { Track, ROAD_HALF, makeFrame } from './track';
-import type { CarModel } from './car';
-import type { Particles } from './particles';
-import { clamp, lerp, wrapAngle } from './noise';
+import { Track, ROAD_HALF, makeFrame } from '../world/track';
+import type { CarModel } from './model';
+import type { Particles } from '../world/particles';
+import { clamp, lerp, wrapAngle } from '../core/math';
 
 export const V_MAX = 78; // m/s, about 280 km/h
 export const V_BOOST = 99;

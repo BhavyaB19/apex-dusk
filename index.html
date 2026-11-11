@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="/src/ui/style.css" />
   </head>
   <body>
     <canvas id="c"></canvas>
@@ -18,11 +18,11 @@
     <div id="hud" class="hidden">
       <div class="panel tl">
         <div class="label">Position</div>
-        <div class="pos"><span id="pos">6</span><sup id="posSuf">th</sup><small>/ 6</small></div>
+        <div class="pos"><span id="pos">6</span><sup id="posSuf">th</sup><small id="posTotal">/ 6</small></div>
       </div>
 
       <div class="panel tr">
-        <div class="row"><span class="label">Lap</span><b><span id="lap">1</span><small> / 3</small></b></div>
+        <div class="row"><span class="label">Lap</span><b><span id="lap">1</span><small id="lapTotal"> / 3</small></b></div>
         <div class="row"><span class="label">Time</span><b id="time">0:00.000</b></div>
         <div class="row dim"><span class="label">Last</span><b id="last">–:––.–––</b></div>
         <div class="row dim"><span class="label">Best</span><b id="best">–:––.–––</b></div>
@@ -46,14 +46,72 @@
 
     <div id="menu">
       <div class="menuInner">
-        <div class="kicker">Twilight circuit · 3 laps · 6 cars</div>
+        <div class="kicker" id="kicker">Arcade racing</div>
         <h1>Apex<span>Dusk</span></h1>
-        <button id="start">Start race</button>
-        <div class="keys">
-          <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrows<span>Drive</span></div>
-          <div><kbd>Space</kbd><span>Drift (fills boost)</span></div>
-          <div><kbd>Shift</kbd><span>Boost</span></div>
-          <div><kbd>R</kbd> reset · <kbd>C</kbd> camera · <kbd>P</kbd> pause · <kbd>M</kbd> mute</div>
+
+        <!-- Join or create a room -->
+        <div id="viewJoin" class="hidden">
+          <label class="field">
+            <span class="label">Your name</span>
+            <input id="name" type="text" maxlength="14" autocomplete="off" spellcheck="false" />
+          </label>
+          <button id="create">Create room</button>
+          <div class="joinRow">
+            <input id="code" type="text" maxlength="4" placeholder="CODE" autocomplete="off" spellcheck="false" />
+            <button id="join" class="ghost">Join room</button>
+          </div>
+          <p id="netMsg" class="note" role="status"></p>
+          <button id="backHome" class="link">Back</button>
+        </div>
+
+        <!-- Room lobby -->
+        <div id="viewLobby" class="hidden">
+          <div class="label">Room code · share it with friends</div>
+          <div id="roomCode">––––</div>
+          <ul id="playerList"></ul>
+        </div>
+
+        <!-- Race options: shown on the home screen and in the lobby -->
+        <div id="options">
+          <div class="opt" data-opt="track">
+            <span class="label">Track</span>
+            <button class="step" data-dir="-1" aria-label="Previous track">‹</button>
+            <b id="optTrack">Sunset Pass</b>
+            <button class="step" data-dir="1" aria-label="Next track">›</button>
+          </div>
+          <div class="opt" data-opt="laps">
+            <span class="label">Laps</span>
+            <button class="step" data-dir="-1" aria-label="Fewer laps">‹</button>
+            <b id="optLaps">3</b>
+            <button class="step" data-dir="1" aria-label="More laps">›</button>
+          </div>
+          <div class="opt hidden" data-opt="bots" id="optBotsRow">
+            <span class="label">AI rivals</span>
+            <button class="step" data-dir="-1" aria-label="Toggle AI rivals">‹</button>
+            <b id="optBots">On</b>
+            <button class="step" data-dir="1" aria-label="Toggle AI rivals">›</button>
+          </div>
+        </div>
+
+        <div id="viewHome">
+          <div class="btnRow">
+            <button id="solo">Solo race</button>
+            <button id="multi" class="ghost">Multiplayer</button>
+          </div>
+          <div class="keys">
+            <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrows<span>Drive</span></div>
+            <div><kbd>Space</kbd><span>Drift (fills boost)</span></div>
+            <div><kbd>Shift</kbd><span>Boost</span></div>
+            <div><kbd>R</kbd> reset · <kbd>C</kbd> camera · <kbd>P</kbd> pause · <kbd>M</kbd> mute</div>
+          </div>
+        </div>
+
+        <div id="lobbyActions" class="hidden">
+          <div class="btnRow">
+            <button id="startMulti">Start race</button>
+            <button id="leave" class="ghost">Leave room</button>
+          </div>
+          <p id="lobbyNote" class="note" role="status"></p>
         </div>
       </div>
     </div>
@@ -63,7 +121,11 @@
         <div class="kicker" id="resKicker">Race complete</div>
         <h2 id="resTitle">1st place</h2>
         <ol id="resList"></ol>
-        <button id="again">Race again</button>
+        <div class="btnRow">
+          <button id="again">Race again</button>
+          <button id="toMenu" class="ghost">Menu</button>
+        </div>
+        <p id="resNote" class="note" role="status"></p>
       </div>
     </div>
 

@@ -69,7 +69,7 @@ kbd {
   font: 600 13px var(--ui);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .tl {
@@ -94,7 +94,7 @@ kbd {
 
 .pos small {
   font: 600 20px var(--ui);
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.8);
   margin-left: 10px;
 }
 
@@ -119,12 +119,12 @@ kbd {
 
 .row b small {
   font: 600 16px var(--ui);
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .row.dim b {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .bl {
@@ -207,7 +207,7 @@ kbd {
   font: 600 14px var(--ui);
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.8);
   margin-top: 4px;
 }
 
@@ -239,7 +239,7 @@ kbd {
   font: 600 12px var(--ui);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 #msg {
@@ -389,7 +389,7 @@ button:hover {
 
 .keys span {
   margin-left: 12px;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 #resList {
@@ -448,7 +448,7 @@ button:hover {
 #pause small {
   font: 600 16px var(--ui);
   letter-spacing: 0.3em;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.86);
 }
 
 @media (max-width: 760px) {
@@ -466,4 +466,221 @@ button:hover {
   #msg {
     font-size: 64px;
   }
+}
+
+/* ---------- Menu options, rooms and lobby ---------- */
+.menuInner {
+  max-height: 100vh;
+  padding: 24px 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+#menu.compact h1 {
+  font-size: clamp(34px, 4.6vw, 60px);
+  margin-bottom: 18px;
+}
+
+#menu.compact h1 span {
+  display: inline;
+  margin-left: 0.25em;
+}
+
+.btnRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+button.ghost {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: none;
+}
+
+button.ghost:hover {
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: none;
+}
+
+button.link {
+  margin-top: 14px;
+  padding: 6px 0;
+  font: 600 15px var(--ui);
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.86);
+  background: none;
+  box-shadow: none;
+}
+
+button.link:hover {
+  color: #fff;
+  transform: none;
+  box-shadow: none;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+#options {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 22px;
+  width: min(400px, 86vw);
+}
+
+.opt {
+  display: grid;
+  grid-template-columns: 92px 40px 1fr 40px;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 6px 5px 14px;
+  background: rgba(14, 8, 30, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+.opt b {
+  text-align: center;
+  font: 700 17px var(--display);
+  letter-spacing: 0.04em;
+}
+
+button.step {
+  padding: 0;
+  width: 40px;
+  height: 36px;
+  font: 700 22px/1 var(--ui);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+button.step:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+  transform: none;
+}
+
+button.step:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 16px;
+  width: min(400px, 86vw);
+}
+
+input[type='text'] {
+  pointer-events: auto;
+  width: 100%;
+  padding: 12px 14px;
+  font: 600 20px var(--ui);
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: rgba(14, 8, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+input[type='text']::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.joinRow {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  width: min(400px, 86vw);
+}
+
+.joinRow input {
+  width: 130px;
+  text-align: center;
+  font-family: var(--display);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.joinRow button {
+  flex: 1;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.note {
+  min-height: 1.3em;
+  margin: 12px 0 0;
+  font: 600 16px var(--ui);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+#roomCode {
+  margin: 2px 0 14px;
+  font: 900 54px/1 var(--display);
+  letter-spacing: 0.22em;
+  color: var(--amber);
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+#playerList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+  width: min(400px, 86vw);
+}
+
+#playerList li,
+#resList li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#playerList li {
+  padding: 6px 14px;
+  margin-bottom: 4px;
+  font: 600 18px var(--ui);
+  letter-spacing: 0.06em;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+#playerList li span {
+  flex: 1;
+}
+
+#playerList li small {
+  font: 700 12px var(--ui);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+#playerList em,
+#resList em {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+#resList li.pending b {
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.keys {
+  margin-top: 24px;
 }
