@@ -40,6 +40,8 @@
         <div class="boostLabel">Boost <kbd>Shift</kbd></div>
       </div>
 
+      <button id="hudMenu" class="ghost">Menu <kbd>Esc</kbd></button>
+
       <div id="msg"></div>
       <div id="wrong" class="hidden">Wrong way</div>
     </div>
@@ -102,7 +104,7 @@
             <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrows<span>Drive</span></div>
             <div><kbd>Space</kbd><span>Drift (fills boost)</span></div>
             <div><kbd>Shift</kbd><span>Boost</span></div>
-            <div><kbd>R</kbd> reset · <kbd>C</kbd> camera · <kbd>P</kbd> pause · <kbd>M</kbd> mute</div>
+            <div><kbd>R</kbd> reset · <kbd>C</kbd> camera · <kbd>Esc</kbd> menu · <kbd>M</kbd> mute</div>
           </div>
         </div>
 
@@ -129,7 +131,14 @@
       </div>
     </div>
 
-    <div id="pause" class="hidden"><div>Paused</div><small>Press P to resume</small></div>
+    <div id="pause" class="hidden">
+      <div id="pauseTitle">Paused</div>
+      <div class="btnRow">
+        <button id="resume">Resume</button>
+        <button id="quit" class="ghost">Quit to menu</button>
+      </div>
+      <small id="pauseNote">Press Esc to resume</small>
+    </div>
 
     <script type="module" src="/src/main.ts"></script>
   </body>

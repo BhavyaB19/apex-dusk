@@ -69,6 +69,8 @@ export class Game {
 
   private phase: Phase = 'menu';
   private paused = false;
+  /** The in-race menu is open. It pauses a solo race; a shared race keeps running behind it. */
+  private overlay = false;
   private time = 0;
   private raceTime = 0;
   private countdown = 0;
@@ -142,6 +144,7 @@ export class Game {
     this.phase = 'menu';
     this.multi = null;
     this.paused = false;
+    this.overlay = false;
     this.resultsShown = false;
     this.hud.show(false);
     this.hud.hideResults();
@@ -169,6 +172,7 @@ export class Game {
     this.finishTime = -1;
     this.resultsShown = false;
     this.paused = false;
+    this.overlay = false;
     this.sendTimer = 0;
     const cars = this.rivals.length + this.remotes.size + 1;
     this.hud.hideResults();
@@ -422,6 +426,7 @@ export class Game {
 
     if (this.phase === 'finished') {
       if (!this.resultsShown && this.time > this.resultsAt) {
+        this.setOverlay(false);
         this.resultsShown = true;
         this.hud.show(false);
         this.refreshResults();
@@ -492,12 +497,21 @@ export class Game {
     const { input } = this;
     if (input.consume('KeyM')) this.audio.toggleMute();
     if (input.consume('KeyC')) this.cam.mode = (this.cam.mode + 1) % 2;
-    // A shared race cannot be paused.
-    const canPause = !this.multi && (this.phase === 'racing' || this.phase === 'countdown');
-    if ((input.consume('KeyP') || input.consume('Escape')) && canPause) {
-      this.paused = !this.paused;
-      this.pauseEl.classList.toggle('hidden', !this.paused);
-    }
+    if (input.consume('KeyP') || input.consume('Escape')) this.setOverlay(!this.overlay);
+  }
+
+  /** Opens or closes the in-race menu (resume or quit). */
+  setOverlay(on: boolean): void {
+    const open = on && this.phase !== 'menu' && !this.resultsShown;
+    this.overlay = open;
+    this.paused = open && !this.multi; // A shared race cannot be paused.
+    this.pauseEl.classList.toggle('hidden', !open);
+    if (!open) return;
+    document.getElementById('pauseTitle')!.textContent = this.multi ? 'Race menu' : 'Paused';
+    document.getElementById('quit')!.textContent = this.multi ? 'Leave room' : 'Quit to menu';
+    document.getElementById('pauseNote')!.textContent = this.multi
+      ? 'The race keeps running for everyone'
+      : 'Press Esc to resume';
   }
 
   private tick(dt: number): void {

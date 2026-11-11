@@ -40,6 +40,16 @@ export class Menu {
     $('join').addEventListener('click', () => void this.enterRoom(this.codeInput.value));
     $('startMulti').addEventListener('click', () => this.net.send({ t: 'start' }));
     $('leave').addEventListener('click', () => this.leaveRoom());
+    // Blur after clicking so Space (drift) cannot re-press a focused button.
+    $('hudMenu').addEventListener('click', (e) => {
+      (e.currentTarget as HTMLElement).blur();
+      this.game.setOverlay(true);
+    });
+    $('resume').addEventListener('click', (e) => {
+      (e.currentTarget as HTMLElement).blur();
+      this.game.setOverlay(false);
+    });
+    $('quit').addEventListener('click', () => this.afterRace(false));
     $('again').addEventListener('click', () => this.afterRace(true));
     $('toMenu').addEventListener('click', () => this.afterRace(false));
     this.codeInput.addEventListener('input', () => {

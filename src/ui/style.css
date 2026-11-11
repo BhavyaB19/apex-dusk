@@ -684,3 +684,29 @@ input[type='text']::placeholder {
 .keys {
   margin-top: 24px;
 }
+
+/* ---------- In-race menu ---------- */
+#hudMenu {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 7px 16px;
+  font: 600 14px var(--ui);
+  letter-spacing: 0.16em;
+  border-radius: 4px;
+  text-shadow: none;
+}
+
+#hudMenu:hover {
+  transform: translateX(-50%);
+}
+
+#pause .btnRow {
+  justify-content: center;
+  margin-top: 6px;
+}
+
+#pause small {
+  text-transform: none;
+}

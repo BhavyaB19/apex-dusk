@@ -31,7 +31,7 @@ It listens on `PORT` (default 3000). A static host such as Netlify can serve `di
 | Shift | Boost |
 | R | Reset to the track centre |
 | C | Switch camera |
-| P or Esc | Pause (solo only) |
+| Esc or P | Race menu: resume or quit (pauses a solo race) |
 | M | Mute |
 
 ## What's in it
