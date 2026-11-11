@@ -4,6 +4,11 @@ A 3D arcade racing game that runs in the browser. Race AI rivals on your own, or
 
 Built with Three.js, TypeScript and Vite, with a small Node server for multiplayer rooms. Everything on screen is generated in code: the tracks, terrain, cars, sky, textures and sound. There are no image, model or audio files.
 
+## Play it
+
+- **Full game, with multiplayer:** https://apex-dusk.onrender.com (can take up to a minute to wake after being idle)
+- **Solo only, loads instantly:** https://apex-dusk.netlify.app
+
 ## Run it
 
 ```bash
